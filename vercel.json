@@ -1,0 +1,14 @@
+{
+	"version": 2,
+	"name": "station-api",
+	"alias": "station-api.sklinkusch.vercel.app",
+	"builds": [
+		{
+			"src": "index.js",
+			"use": "@vercel/node"
+		}
+	],
+	"github": {
+		"silent": true
+	}
+}
