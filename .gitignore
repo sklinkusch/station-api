@@ -1,0 +1,8 @@
+# additional modules
+node_modules
+
+# editor settings
+.vscode
+
+# error files
+.yarn-error
