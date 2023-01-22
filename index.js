@@ -31,4 +31,27 @@ app.get('/', (req, res) => {
   }
 });
 
+app.get("/id", (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Content-Type', 'application/json');
+  const { id } = req.query;
+  const mappedStations = Object.values(stations).map(station => {
+    const { id: oldStationId, name: oldStationName } = station
+    const idStationArray = oldStationId.split(':')
+    const newId = idStationArray[2]
+    if (oldStationName.endsWith("(Berlin)")) {
+      const modifiedNameA = oldStationName.replace(" (Berlin)", "")
+      const modifiedNameB = `Berlin, ${modifiedNameA}`
+      return { ...station, id: newId, name: modifiedNameB }
+    }
+    return { ...station, id: newId }
+  })
+  const filteredStations = mappedStations.filter(station => station.id === id)
+  if (filteredStations.length >= 1) {
+    const station = filteredStations[0]
+    return res.status(200).json(station)
+  } 
+  return res.status(204).json({})
+})
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
