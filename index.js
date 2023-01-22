@@ -37,7 +37,7 @@ app.get("/id", (req, res) => {
   const { id } = req.query;
   const mappedStations = Object.values(stations).map(station => {
     const { id: oldStationId, name: oldStationName } = station
-    const idStationArray = oldStationId.split(':')
+    const idStationArray = oldStationId.split(/:+/)
     const newId = idStationArray[2]
     if (oldStationName.endsWith("(Berlin)")) {
       const modifiedNameA = oldStationName.replace(" (Berlin)", "")
