@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 const stations = require('vbb-stations/full.json');
 
-app.get('/', (req, res) => {
+app.get('/station', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
   const { inputName } = req.query;
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
   }
 });
 
-app.get("/id", (req, res) => {
+app.get('/id', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
   const { id } = req.query;
@@ -45,13 +45,17 @@ app.get("/id", (req, res) => {
       return { ...station, id: newId, name: modifiedNameB }
     }
     return { ...station, id: newId }
-  })
-  const filteredStations = mappedStations.filter(station => station.id === id)
+  });
+  const filteredStations = mappedStations.filter(station => station.id === id);
   if (filteredStations.length >= 1) {
-    const station = filteredStations[0]
-    return res.status(200).json(station)
+    const station = filteredStations[0];
+    return res.status(200).json(station);
   } 
-  return res.status(204).json({})
-})
+  return res.status(204).json({});
+});
+
+app.all('*', (req, res) => {
+  return res.status(404).json({ error: { message: 'The endpoint does not exist.' }});
+});
 
 app.listen(port, () => console.log(`App listening on port ${port}!`));
