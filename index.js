@@ -24,9 +24,7 @@ app.get('/', (req, res) => {
     const uniqueStationIdSet = new Set(stationIds);
     const uniqueStationIds = Array.from(uniqueStationIdSet);
     const uniqueStations = uniqueStationIds.map(id => modifiedStations.filter(station => station.id === id)[0]);
-    console.log(uniqueStations);
     const sortedStations = uniqueStations.sort((a, b) => {
-      console.log(a.name, b.name);
       return a.name.localeCompare(b.name, 'de', { sensitivity: 'base' })
     });
     if (sortedStations.length > 0) {
